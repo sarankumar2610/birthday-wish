@@ -58,16 +58,18 @@
         }
 
         .heart {
-            position: fixed;
-            color: red;
-            font-size: 24px;
-            animation: fall 3s linear infinite;
-        }
+    position: fixed;
+    top: -10vh; /* Start above the visible area */
+    font-size: 24px;
+    animation: fall 3s linear forwards;
+    white-space: nowrap; /* Prevents text wrapping */
+}
 
-        @keyframes fall {
-            0% { transform: translateY(-10vh) translateX(0); opacity: 1; }
-            100% { transform: translateY(100vh) translateX(20px); opacity: 0; }
-        }
+@keyframes fall {
+    0% { transform: translateY(-10vh) translateX(0); opacity: 1; }
+    100% { transform: translateY(100vh) translateX(20px); opacity: 0; }
+}
+
     </style>
 </head>
 <body>
@@ -104,29 +106,31 @@
         setInterval(updateCountdown, 1000);
 
         function showGift() {
-            const birthday = new Date("March 12, 2025 00:00:00").getTime();
+            const birthday = new Date("March 11, 2025 00:00:00").getTime();
             const now = new Date().getTime();
             if (now < birthday) {
                 alert("Wait panu pakki athukula ena avasaram!😜");
             } else {
                 createHeartShower(); // Start the heart animation
                 setTimeout(() => {
-                    window.location.href = "gift.html"; // Redirect to gift page
-                }, 3000); // Wait 3 seconds before redirecting
+                    window.location.href = "gift.html"; 
+                }, 3000); 
             }
         }
 
         function createHeartShower() {
-            for (let i = 0; i < 100; i++) {
-                let heart = document.createElement("div");
-                heart.classList.add("heart");
-                heart.innerHTML = "🥰     ❣      ✨      💓      💫       💝      💗";
-                heart.style.left = Math.random() * 100 + "vw";
-                heart.style.animationDuration = (Math.random() * 2 + 1) + "s";
-                document.body.appendChild(heart);
-                setTimeout(() => heart.remove(), 2000);
-            }
-        }
+    for (let i = 0; i < 500; i++) { // Reduce count for better animation
+        let heart = document.createElement("div");
+        heart.classList.add("heart");
+        heart.innerHTML = "🥰        ❣       ✨      💓      💫      💝       💗"; // Single heart for a smooth effect
+        heart.style.left = Math.random() * 100 + "vw"; // Random horizontal position
+        heart.style.animationDuration = (Math.random() * 5 + 2) + "s"; // Vary duration slightly
+        document.body.appendChild(heart);
+
+        setTimeout(() => heart.remove(), 5000); // Extend lifetime for smooth transition
+    }
+}
+
     </script>
 </body>
 </html>
