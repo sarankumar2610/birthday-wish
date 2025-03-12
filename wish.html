@@ -61,7 +61,7 @@
     position: fixed;
     top: -10vh; /* Start above the visible area */
     font-size: 24px;
-    animation: fall 3s linear forwards;
+    animation: fall 10s linear forwards;
     white-space: nowrap; /* Prevents text wrapping */
 }
 
@@ -119,10 +119,11 @@
         }
 
         function createHeartShower() {
-    for (let i = 0; i < 500; i++) { // Reduce count for better animation
+    for (let i = 0; i < 600; i++) { // Reduce count for better animation
         let heart = document.createElement("div");
         heart.classList.add("heart");
-        heart.innerHTML = "🥰        ❣       ✨      💓      💫      💝       💗"; // Single heart for a smooth effect
+        heart.innerHTML = "🥰        🎁      🎊       ✨      🍫        💗";
+     // Single heart for a smooth effect
         heart.style.left = Math.random() * 100 + "vw"; // Random horizontal position
         heart.style.animationDuration = (Math.random() * 5 + 2) + "s"; // Vary duration slightly
         document.body.appendChild(heart);
