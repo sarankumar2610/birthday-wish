@@ -6,7 +6,7 @@
     <title>Happy Birthday Dear Thangachi</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
-        
+
         body {
             text-align: center;
             background: url('hrt20.jpg') no-repeat center center fixed;
@@ -18,8 +18,9 @@
             height: 100vh;
             flex-direction: column;
             position: relative;
+            overflow: hidden;
         }
-        
+
         body::before {
             content: "";
             position: absolute;
@@ -30,18 +31,20 @@
             background: rgba(177, 156, 156, 0.4); /* Light pink overlay for better visibility */
             z-index: -1;
         }
-        
+
         h1 {
             color: white;
             font-size: 3em;
             font-family: 'Dancing Script', cursive;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         }
+
         #countdown {
             font-size: 2em;
             color: #fff;
             text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
         }
+
         .gift-button {
             background: #ff69b4;
             color: white;
@@ -52,6 +55,18 @@
             cursor: pointer;
             margin-top: 20px;
             box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .heart {
+            position: fixed;
+            color: red;
+            font-size: 24px;
+            animation: fall 3s linear infinite;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-10vh) translateX(0); opacity: 1; }
+            100% { transform: translateY(100vh) translateX(20px); opacity: 0; }
         }
     </style>
 </head>
@@ -87,14 +102,29 @@
             }
         }
         setInterval(updateCountdown, 1000);
-        
+
         function showGift() {
-            const birthday = new Date("March 20, 2025 00:00:00").getTime();
+            const birthday = new Date("March 12, 2025 00:00:00").getTime();
             const now = new Date().getTime();
             if (now < birthday) {
-                alert("Wait panu athukula ena avasaram! time agatum paaki 😜");
+                alert("Wait panu pakki athukula ena avasaram!😜");
             } else {
-                window.location.href = "gift.html"; // Redirect to gift page
+                createHeartShower(); // Start the heart animation
+                setTimeout(() => {
+                    window.location.href = "gift.html"; // Redirect to gift page
+                }, 3000); // Wait 3 seconds before redirecting
+            }
+        }
+
+        function createHeartShower() {
+            for (let i = 0; i < 100; i++) {
+                let heart = document.createElement("div");
+                heart.classList.add("heart");
+                heart.innerHTML = "🥰     ❣      ✨      💓      💫       💝      💗";
+                heart.style.left = Math.random() * 100 + "vw";
+                heart.style.animationDuration = (Math.random() * 2 + 1) + "s";
+                document.body.appendChild(heart);
+                setTimeout(() => heart.remove(), 2000);
             }
         }
     </script>
