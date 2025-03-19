@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Special Gift</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
+
+        body {
+            text-align: center;
+            background: url('bfly.jpg') no-repeat center center/cover;
+            font-family: 'Dancing Script', cursive;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Floating Quotes Box */
+        .quotes-box {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 820px;
+            height: auto;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            text-align: center;
+            animation: floatBox 5s infinite alternate ease-in-out;
+        }
+
+        /* Floating Effect */
+        @keyframes floatBox {
+            0% { transform: translate(-50%, -50%) translateY(0); }
+            100% { transform: translate(-50%, -50%) translateY(20px); }
+        }
+
+        /* Typing Effect */
+        .quote-text {
+            font-size: 1.8em;
+            color: #ff1493;
+            font-weight: bold;
+            text-align: center;
+            margin: 10px 0;
+            overflow: hidden;
+            white-space: nowrap;
+            display: block;
+        }
+
+        /* Next Button */
+        .next-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #ff1493;
+            color: white;
+            font-size: 1.5em;
+            font-family: 'Dancing Script', cursive;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            transition: 0.3s;
+        }
+
+        .next-button:hover {
+            background: #ff007f;
+            transform: scale(1.1);
+        }
+
+        /* Emoji Rain Effect */
+        .emoji {
+            position: absolute;
+            top: -10vh;
+            font-size: 30px;
+            animation: fall 6s linear infinite;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-10vh) translateX(0); opacity: 1; }
+            100% { transform: translateY(100vh) translateX(20px); opacity: 0; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Floating Quotes Box -->
+    <div class="quotes-box" id="quotes-container"></div>
+
+    <!-- Next Button -->
+    <button class="next-button" onclick="goToNextPage()">Next →</button>
+
+    <!-- JavaScript for Typing Effect -->
+    <script>
+        const quotes = [
+            "Iniku unoda life la spl day… 🎂✨",
+            "🎉 Wishing you a day filled with love & happiness dear Thangachiii Ma 💖",
+            "🌸 Many more happy returns of the day pakki ✨",
+            "🎂 May your dreams come true this year! 🎁",
+            "💖 Keep smiling and spreading joy always! 😍",
+            "🎊 Today is all about celebrating YOU! 🎈",
+            "🥳 You deserve all the happiness in the world! 🎊",
+            "💖 You are the most important person in my life sista 💫",
+            "💌 I'm always there for you forever 🍫",
+            "💕 Nee epovum santhoshama irukanum, athu dhan en biggest wish! 💗",
+            "🫂 Pesnalum pesala nalum, yaaru ena sonnalum nee dhan en thangachi 🤗",
+            "♾ Unakaga nan epavum unkoodave irupen!😇",
+            "👻 Naane unaku periya gift dhan so gift la kekatha 😁",
+            "❤‍🩹 #Anna Thanagachii 4ever 🫂"
+        ];
+
+        let quoteIndex = 0;
+        
+        function typeQuote(index) {
+            if (index >= quotes.length) return;
+            
+            let container = document.getElementById("quotes-container");
+            let newParagraph = document.createElement("p");
+            newParagraph.classList.add("quote-text");
+            container.appendChild(newParagraph);
+            
+            let text = quotes[index];
+            let charIndex = 0;
+
+            function typeChar() {
+                if (charIndex < text.length) {
+                    newParagraph.innerHTML += text.charAt(charIndex);
+                    charIndex++;
+                    setTimeout(typeChar, 30);
+                } else {
+                    setTimeout(() => typeQuote(index + 1), 10); // Wait before next quote
+                }
+            }
+
+            typeChar();
+        }
+
+        typeQuote(0); // Start the typing animation
+
+        // JavaScript for Emoji Rain Effect
+        function createEmojiRain() {
+            const emojis = ["🥰","🎂","💖","✨","🎁","💓","🍫","💫"];
+            setInterval(() => {
+                let emoji = document.createElement("div");
+                emoji.classList.add("emoji");
+                emoji.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
+                emoji.style.left = Math.random() * 100 + "vw"; 
+                emoji.style.animationDuration = (Math.random() * 3 + 2) + "s"; 
+                document.body.appendChild(emoji);
+
+                setTimeout(() => {
+                    emoji.remove();
+                }, 5000);
+            }, 200);
+        }
+
+        createEmojiRain();
+
+        // Function to go to next page
+        function goToNextPage() {
+            window.location.href = "aishu.html"; // Change this to the actual next page URL
+        }
+    </script>
+
+</body>
+</html>

@@ -11,28 +11,51 @@
             align-items: center;
             height: 100vh;
             background: url('bck1.jpg') no-repeat center center/cover;
-            font-family: Arial, sans-serif;
+            font-family: 'Poppins', sans-serif;
         }
         .login-container {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.9);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
             text-align: center;
+            width: 320px;
+            transition: transform 0.3s ease-in-out;
+        }
+        .login-container:hover {
+            transform: scale(1.05);
+        }
+        h2 {
+            color: #d63384;
+            font-size: 22px;
         }
         input {
-            padding: 10px;
-            margin: 10px 0;
-            width: 80%;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+            padding: 12px;
+            margin: 15px 0;
+            width: 85%;
+            border: 1px solid #d63384;
+            border-radius: 8px;
+            outline: none;
+            font-size: 16px;
+            text-align: center;
         }
         button {
-            background: pink;
+            background: #ff3385;
+            color: white;
             border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-size: 16px;
             cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        button:hover {
+            background: #e492b3;
+        }
+        #error-message {
+            color: red;
+            font-size: 14px;
+            display: none;
         }
     </style>
 </head>
@@ -41,7 +64,7 @@
         <h2>Login with your DOB</h2>
         <input type="date" id="dob" />
         <button onclick="checkLogin()">Login</button>
-        <p id="error-message" style="color: red; display: none;">Incorrect DOB. Try again.</p>
+        <p id="error-message">Incorrect DOB. Try again.</p>
     </div>
 
     <script>

@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Special Memories</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: url('bfly1.jpg') no-repeat center center/cover;
+        }
+
+        h2 {
+            color: white;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        .gallery-container {
+            display: flex;
+            justify-content: center;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            max-width: 90%;
+            overflow-y: auto;
+            max-height: 80vh;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .gallery img, .gallery video {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .gallery img:hover, .gallery video:hover {
+            transform: scale(1.05);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal img, .modal video {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 10px;
+        }
+
+        .close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 2em;
+            color: white;
+            cursor: pointer;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>🎉 Special Memories 🎉</h2>
+
+    <div class="gallery-container">
+        <div class="gallery" id="gallery"></div>
+    </div>
+
+    <div class="modal" id="mediaModal">
+        <span class="close" id="closeModal">✖</span>
+        <img id="modalImage" style="display:none;">
+        <video id="modalVideo" controls style="display:none;"></video>
+    </div>
+
+    <script>
+        const mediaPaths = [
+        { type: "video", src: "aishuu1.mp4" },
+        { type: "video", src: "aishuu3.mp4" },
+        { type: "video", src: "aishuu2.mp4" },
+            { type: "image", src: "aishu1.webp" },
+            { type: "image", src: "aishu2.jpg" },
+            { type: "image", src: "aishu3.jpg" },
+            { type: "image", src: "aishu4.jpg" }, 
+            { type: "image", src: "aishu5.jpg" },
+            { type: "image", src: "aishu6.jpg" },
+            { type: "image", src: "aishu7.jpg" },
+            { type: "image", src: "aishu9.jpg" },
+            { type: "image", src: "aishu10.jpg" }, 
+            { type: "image", src: "aishu11.jpg" },
+            { type: "image", src: "aishu12.jpg" },
+            { type: "image", src: "aishu13.jpg" },
+            { type: "image", src: "aishu14.jpg" },
+            { type: "image", src: "aishu15.jpg" },
+            { type: "image", src: "aishu16.jpg" }, 
+            { type: "image", src: "aishu18.jpg" },
+            { type: "image", src: "aishu19.jpg" },
+            { type: "image", src: "aishu20.jpg" },
+            { type: "image", src: "aishu21.jpg" },
+            { type: "image", src: "aishu22.jpg" }, 
+            { type: "image", src: "aishu23.jpg" },
+            { type: "image", src: "aishu24.jpg" },
+            { type: "image", src: "aishu25.jpg" },
+            { type: "image", src: "aishu26.jpg" },
+            { type: "image", src: "aishu27.jpg" },
+            { type: "image", src: "aishu28.jpg" }, 
+            { type: "image", src: "aishu29.jpg" },
+            { type: "image", src: "aishu30.jpg" },
+            { type: "image", src: "aishu31.jpg" },
+            { type: "image", src: "aishu32.jpg" },
+            { type: "image", src: "aishu33.jpg" },
+            { type: "image", src: "aishu34.jpg" }, 
+            { type: "image", src: "aishu35.jpg" },
+            { type: "image", src: "aishu36.jpg" },
+            { type: "image", src: "aishu37.jpg" },
+            { type: "image", src: "aishu38.jpg" },
+            { type: "image", src: "aishu39.jpg" },
+            { type: "image", src: "aishu40.jpg" }, 
+            { type: "image", src: "aishu41.jpg" },
+            { type: "image", src: "aishu42.jpg" },
+            { type: "image", src: "aishu43.jpg" },
+            { type: "image", src: "aishu44.jpg" },
+            { type: "image", src: "aishu45.jpg" },
+            { type: "image", src: "aishu46.jpg" },
+            { type: "image", src: "aishu47.jpg" },
+            { type: "image", src: "aishu48.jpg" }, 
+            { type: "image", src: "moon20.webp" },
+            { type: "image", src: "aishu49.jpg" },
+            { type: "image", src: "aishu50.jpg" },
+            { type: "image", src: "aishu51.jpg" },
+            { type: "image", src: "aishu52.jpg" },
+            { type: "image", src: "aishu53.jpg" },
+            { type: "image", src: "aishu54.jpg" }, 
+            { type: "image", src: "aishu55.jpg" },
+            { type: "image", src: "aishu56.jpg" },
+            { type: "image", src: "aishu57.jpg" },
+            { type: "image", src: "aishu58.jpg" },
+            { type: "image", src: "aishu59.jpg" },
+            { type: "image", src: "aishu60.jpg" }, 
+            { type: "image", src: "aishu61.jpg" },
+            { type: "image", src: "aishu62.jpg" },
+            { type: "image", src: "aishu63.jpg" },
+            { type: "image", src: "aishu64.jpg" },
+            { type: "image", src: "aishu65.jpg" },
+            { type: "image", src: "aishu66.jpg" }, 
+            { type: "image", src: "aishu67.jpg" },
+            { type: "image", src: "aishu68.jpg" },
+            { type: "image", src: "aishu69.jpg" },
+            { type: "image", src: "aishu70.jpg" },
+            { type: "image", src: "aishu71.jpg" },
+            { type: "image", src: "aishu72.jpg" }, 
+            { type: "image", src: "aishu73.jpg" },
+            { type: "image", src: "aishu74.jpg" },
+            { type: "image", src: "aishu75.jpg" },
+            { type: "image", src: "aishu76.jpg" },
+            { type: "image", src: "aishu77.jpg" },
+            { type: "image", src: "aishu78.jpg" }, 
+            { type: "image", src: "aishu79.jpg" },
+            { type: "image", src: "aishu80.jpg" },
+            { type: "image", src: "aishu81.jpg" },
+            { type: "image", src: "aishu82.jpg" },
+            { type: "image", src: "aishu83.jpg" },
+            { type: "image", src: "aishu84.jpg" }, 
+            { type: "image", src: "aishu85.jpg" },
+            { type: "image", src: "aishu86.jpg" },
+            { type: "image", src: "aishu87.jpg" },
+            { type: "image", src: "aishu88.jpg" },
+            { type: "image", src: "aishu89.jpg" },
+            { type: "image", src: "aishu90.jpg" }
+            
+        ];
+
+        function loadMedia() {
+            const gallery = document.getElementById("gallery");
+
+            mediaPaths.forEach((media) => {
+                let mediaElement;
+                if (media.type === "image") {
+                    mediaElement = document.createElement("img");
+                    mediaElement.src = media.src;
+                    mediaElement.onclick = () => openModal("image", media.src);
+                } else {
+                    mediaElement = document.createElement("video");
+                    mediaElement.src = media.src;
+                    mediaElement.muted = true;
+                    mediaElement.loop = true;
+                    mediaElement.play();
+                    mediaElement.onclick = () => openModal("video", media.src);
+                }
+
+                gallery.appendChild(mediaElement);
+            });
+        }
+
+        function openModal(type, src) {
+            const modalImage = document.getElementById("modalImage");
+            const modalVideo = document.getElementById("modalVideo");
+            document.getElementById("mediaModal").style.display = "flex";
+
+            if (type === "image") {
+                modalImage.src = src;
+                modalImage.style.display = "block";
+                modalVideo.style.display = "none";
+            } else {
+                modalVideo.src = src;
+                modalVideo.style.display = "block";
+                modalImage.style.display = "none";
+            }
+        }
+
+        function closeModal() {
+            document.getElementById("mediaModal").style.display = "none";
+            document.getElementById("modalVideo").pause();
+        }
+
+        document.getElementById("closeModal").addEventListener("click", closeModal);
+        document.getElementById("mediaModal").addEventListener("click", function(event) {
+            if (event.target === this) {
+                closeModal();
+            }
+        });
+
+        window.onload = loadMedia;
+    </script>
+</body>
+</html>

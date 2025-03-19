@@ -21,15 +21,17 @@
             overflow: hidden;
         }
 
-        body::before {
+        /* Blur effect for background only */
+        .blur-background::before {
             content: "";
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(177, 156, 156, 0.4); /* Light pink overlay for better visibility */
-            z-index: -1;
+            backdrop-filter: blur(8px); /* Only background gets blurred */
+            background: rgba(0, 0, 0, 0.3); /* Dark overlay for better visibility */
+            z-index: 5;
         }
 
         h1 {
@@ -37,12 +39,16 @@
             font-size: 3em;
             font-family: 'Dancing Script', cursive;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            position: relative;
+            z-index: 1;
         }
 
         #countdown {
             font-size: 2em;
             color: #fff;
             text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+            position: relative;
+            z-index: 1;
         }
 
         .gift-button {
@@ -55,83 +61,92 @@
             cursor: pointer;
             margin-top: 20px;
             box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 1;
         }
 
-        .heart {
-    position: fixed;
-    top: -10vh; /* Start above the visible area */
-    font-size: 24px;
-    animation: fall 8s linear forwards;
-    white-space: nowrap; /* Prevents text wrapping */
-}
+        /* Floating Message */
+        .floating-tab {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgb(239, 155, 222); /* Bright pink */
+            color: white;
+            padding: 20px 30px;
+            font-size: 1.5em;
+            font-weight: bold;
+            border-radius: 10px;
+            box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease-in-out, visibility 0.5s;
+            z-index: 10; /* Keeps the message clear above the blur */
+        }
 
-@keyframes fall {
-    0% { transform: translateY(-10vh) translateX(0); opacity: 1; }
-    100% { transform: translateY(100vh) translateX(20px); opacity: 0; }
-}
-
+        .show-tab {
+            opacity: 1;
+            visibility: visible;
+        }
     </style>
 </head>
 <body>
     <script>
-        // If user is not logged in, redirect to login page
         if (!sessionStorage.getItem("loggedIn")) {
-            window.location.href = "index.html"; // Redirect to login page
+            window.location.href = "index.html";
         }
     </script>
 
-    <h1>Happy Birthday Dear Thangachi! 🎉🎂</h1>
+    <h1>Happy Birthday Dear Thangachi!😍💌🎂</h1>
     <h1>💗 Aishu 💗 </h1>
     <h1>🥰💌✨</h1>
     <p id="countdown"></p>
     <button class="gift-button" onclick="showGift()">Click for your gift 🎁🎉</button>
 
+    <!-- Centered Floating Message -->
+    <div id="floatingTab" class="floating-tab">Wait panu pakki athukula ena avasaram!😜</div>
+
     <script>
         function updateCountdown() {
-            const birthday = new Date("March 20, 2025 00:00:00").getTime();
+            const birthday = new Date("March 10, 2025 00:00:00").getTime();
             const now = new Date().getTime();
             const difference = birthday - now;
-            
+
+            if (difference < 0) {
+                document.getElementById("countdown").innerText = "💓A special day🎁";
+                return;
+            }
+
             const days = Math.floor(difference / (1000 * 60 * 60 * 24));
             const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((difference % (1000 * 60)) / 1000);
-            
+
             document.getElementById("countdown").innerText = `Countdown: ${days}d ${hours}h ${minutes}m ${seconds}s`;
-            
-            if (difference < 0) {
-                document.getElementById("countdown").innerText = "Happy Birthday! 🎉";
-            }
         }
+
         setInterval(updateCountdown, 1000);
 
         function showGift() {
-            const birthday = new Date("March 20, 2025 00:00:00").getTime();
+            const birthday = new Date("March 10, 2025 00:00:00").getTime();
             const now = new Date().getTime();
             if (now < birthday) {
-                alert("Wait panu pakki athukula ena avasaram!😜");
+                showFloatingMessage();
             } else {
-                createHeartShower(); // Start the heart animation
-                setTimeout(() => {
-                    window.location.href = "gift.html"; 
-                }, 3000); 
+                window.location.href = "quotes.html";
             }
         }
 
-        function createHeartShower() {
-    for (let i = 0; i < 600; i++) { // Reduce count for better animation
-        let heart = document.createElement("div");
-        heart.classList.add("heart");
-        heart.innerHTML = "🥰        🎁      🎊       ✨      🍫        💗";
-     // Single heart for a smooth effect
-        heart.style.left = Math.random() * 100 + "vw"; // Random horizontal position
-        heart.style.animationDuration = (Math.random() * 5 + 2) + "s"; // Vary duration slightly
-        document.body.appendChild(heart);
+        function showFloatingMessage() {
+            let floatingTab = document.getElementById("floatingTab");
+            document.body.classList.add("blur-background"); // Add blur effect only to background
+            floatingTab.classList.add("show-tab");
 
-        setTimeout(() => heart.remove(), 5000); // Extend lifetime for smooth transition
-    }
-}
-
+            setTimeout(() => {
+                floatingTab.classList.remove("show-tab");
+                document.body.classList.remove("blur-background"); // Remove blur effect
+            }, 3000);
+        }
     </script>
 </body>
 </html>
