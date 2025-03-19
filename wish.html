@@ -108,7 +108,7 @@
 
     <script>
         function updateCountdown() {
-            const birthday = new Date("March 10, 2025 00:00:00").getTime();
+            const birthday = new Date("March 20, 2025 00:00:00").getTime();
             const now = new Date().getTime();
             const difference = birthday - now;
 
@@ -128,7 +128,7 @@
         setInterval(updateCountdown, 1000);
 
         function showGift() {
-            const birthday = new Date("March 10, 2025 00:00:00").getTime();
+            const birthday = new Date("March 20, 2025 00:00:00").getTime();
             const now = new Date().getTime();
             if (now < birthday) {
                 showFloatingMessage();
